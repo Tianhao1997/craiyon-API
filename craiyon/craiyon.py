@@ -1,6 +1,7 @@
 from __future__ import annotations
 import requests
 from craiyon.templates import GeneratedImages
+import aiohttp
 
 class Craiyon:
     '''
@@ -17,3 +18,9 @@ class Craiyon:
         url = self.BASE_URL + "/generate"
         resp = self.session.post(url, json={'prompt': tokens})
         return GeneratedImages(resp.json()['images'])
+    
+    async def generate_async(self, tokens: str) -> GeneratedImages:
+        url = self.BASE_URL + "/generate
+        async with aiohttp.request("POST", json={'prompt': tokens}) as r:
+            data = await r.json()
+        return GeneratedImages(data['images'])
